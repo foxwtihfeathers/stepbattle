@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	windowSizeX = 50
-	windowSizeY = 15
+	windowSizeX = 100
+	windowSizeY = 30
 	mapWidth    = windowSizeX
 	mapHeight   = windowSizeY
 	title       = "Step"
@@ -46,6 +46,8 @@ func initUnit() {
 func initLevel() {
 	levelmap = &mapping.Map{Width: mapWidth, Height: mapHeight}
 	levelmap.InitializeMap()
+	levelmap.GenerateArena()
+	levelmap.GenerateCavern(50, 5)
 }
 
 func initCamera() {
@@ -123,7 +125,7 @@ func handleKey(key int) {
 		dy = 0
 	}
 
-	if dx != 0 || dy != 0 {
+	if !levelmap.IsBlocked(player.X+dx, player.Y+dy) {
 		player.Move(dx, dy)
 	}
 }
